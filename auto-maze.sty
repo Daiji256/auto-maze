@@ -9,7 +9,7 @@
   {
     \int_new:N \l_am_cnt_i_int
     \int_new:N \l_am_rand_int
-    \seq_new:N \l_am_maze_seq
+    \prop_new:N \l_am_maze_prop
 
     \int_set:Nn \l_am_cnt_i_int { 0 }
     % first line
@@ -18,28 +18,28 @@
         \int_compare:nNnTF { \l_am_cnt_i_int } = { 0 }
           {
             \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(0, 3) } }
-            \seq_put_right:NV \l_am_maze_seq \l_am_rand_int
+            \prop_put:NVV \l_am_maze_prop \l_am_cnt_i_int \l_am_rand_int
           }
           {
             \int_compare:nNnTF { \l_am_rand_int } = { 2 }
               {
                 \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(1, 3) } }
-                \seq_put_right:NV \l_am_maze_seq \l_am_rand_int
+                \prop_put:NVV \l_am_maze_prop \l_am_cnt_i_int \l_am_rand_int
               }
               {
                 \int_set:Nn \l_am_rand_int { \int_eval:n { \fp_eval:n { randint(0, 3) } } }
-                \seq_put_right:NV \l_am_maze_seq \l_am_rand_int
+                \prop_put:NVV \l_am_maze_prop \l_am_cnt_i_int \l_am_rand_int
               }
           }
         \int_incr:N \l_am_cnt_i_int
       }
 
     \int_set:Nn \l_am_cnt_i_int { 0 }
-    \int_do_while:nn { \l_am_cnt_i_int < 5 }
+    \int_do_while:nn { \l_am_cnt_i_int < 25 }
       {
-        \int_incr:N \l_am_cnt_i_int
-        \seq_pop_left:NN \l_am_maze_seq \l_am_maze_value_tl
+        \prop_get:NVN  \l_am_maze_prop \l_am_cnt_i_int \l_am_maze_value_tl
         \l_am_maze_value_tl
+        \int_incr:N \l_am_cnt_i_int
       }
   }
 
