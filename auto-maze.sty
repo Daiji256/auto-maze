@@ -17,6 +17,7 @@
     \int_new:N  \l_am_maze_height_int    % maze height (odd)
     \int_new:N  \l_am_maze_width_int     % maze width (odd)
     \prop_new:N \l_am_maze_prop          % maze data, key(i*w+j) => (road, wall)
+    \int_new:N  \l_am_tmp_int            % tmp
     \int_new:N  \l_am_key_int            % i*w+j
     \int_new:N  \l_am_key_left_int       % key-1
     \int_new:N  \l_am_key_top_int        % key-width
@@ -52,24 +53,24 @@
           {
             \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(0, 2) } }
             \int_compare:nNnT { \l_am_rand_int } = { 0 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int + 1 } }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int + 1 } }
             \int_compare:nNnT { \l_am_rand_int } = { 1 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int + \l_am_maze_width_int } }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int + \l_am_maze_width_int } }
             \int_compare:nNnT { \l_am_rand_int } = { 2 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int - \l_am_maze_width_int } }
-            \prop_put:NVn \l_am_maze_prop \l_am_key_left_int { \l_am_wall_int }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int - \l_am_maze_width_int } }
+            \prop_put:NVn \l_am_maze_prop \l_am_tmp_int { \l_am_wall_int }
           }
           {
             \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(0, 3) } }
             \int_compare:nNnT { \l_am_rand_int } = { 0 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int + 1 } }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int + 1 } }
             \int_compare:nNnT { \l_am_rand_int } = { 1 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int - 1 } }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int - 1 } }
             \int_compare:nNnT { \l_am_rand_int } = { 2 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int + \l_am_maze_width_int } }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int + \l_am_maze_width_int } }
             \int_compare:nNnT { \l_am_rand_int } = { 3 }
-              { \int_set:Nn \l_am_key_left_int { \l_am_key_int - \l_am_maze_width_int } }
-            \prop_put:NVn \l_am_maze_prop \l_am_key_left_int { \l_am_wall_int }
+              { \int_set:Nn \l_am_tmp_int { \l_am_key_int - \l_am_maze_width_int } }
+            \prop_put:NVn \l_am_maze_prop \l_am_tmp_int { \l_am_wall_int }
           }
         \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
       }
@@ -93,33 +94,33 @@
                   {
                     \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(0, 1) } }
                     \int_compare:nNnT { \l_am_rand_int } = { 0 }
-                      { \int_set:Nn \l_am_key_left_int { \l_am_key_int + 1 } }
+                      { \int_set:Nn \l_am_tmp_int { \l_am_key_int + 1 } }
                     \int_compare:nNnT { \l_am_rand_int } = { 1 }
-                      { \int_set:Nn \l_am_key_left_int { \l_am_key_int + \l_am_maze_width_int } }
-                    \prop_put:NVn \l_am_maze_prop \l_am_key_left_int { \l_am_wall_int }
+                      { \int_set:Nn \l_am_tmp_int { \l_am_key_int + \l_am_maze_width_int } }
+                    \prop_put:NVn \l_am_maze_prop \l_am_tmp_int { \l_am_wall_int }
                   }
                   {
                     \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(0, 2) } }
                     \int_compare:nNnT { \l_am_rand_int } = { 0 }
-                      { \int_set:Nn \l_am_key_left_int { \l_am_key_int + 1 } }
+                      { \int_set:Nn \l_am_tmp_int { \l_am_key_int + 1 } }
                     \int_compare:nNnT { \l_am_rand_int } = { 1 }
-                      { \int_set:Nn \l_am_key_left_int { \l_am_key_int + \l_am_maze_width_int } }
+                      { \int_set:Nn \l_am_tmp_int { \l_am_key_int + \l_am_maze_width_int } }
                     \int_compare:nNnT { \l_am_rand_int } = { 2 }
-                      { \int_set:Nn \l_am_key_left_int { \l_am_key_int - \l_am_maze_width_int } }
-                    \prop_put:NVn \l_am_maze_prop \l_am_key_left_int { \l_am_wall_int }
+                      { \int_set:Nn \l_am_tmp_int { \l_am_key_int - \l_am_maze_width_int } }
+                    \prop_put:NVn \l_am_maze_prop \l_am_tmp_int { \l_am_wall_int }
                   }
               }
               {
                 \int_set:Nn \l_am_rand_int { \fp_eval:n { randint(0, 3) } }
                 \int_compare:nNnT { \l_am_rand_int } = { 0 }
-                  { \int_set:Nn \l_am_key_left_int { \l_am_key_int + 1 } }
+                  { \int_set:Nn \l_am_tmp_int { \l_am_key_int + 1 } }
                 \int_compare:nNnT { \l_am_rand_int } = { 1 }
-                  { \int_set:Nn \l_am_key_left_int { \l_am_key_int - 1 } }
+                  { \int_set:Nn \l_am_tmp_int { \l_am_key_int - 1 } }
                 \int_compare:nNnT { \l_am_rand_int } = { 2 }
-                  { \int_set:Nn \l_am_key_left_int { \l_am_key_int + \l_am_maze_width_int } }
+                  { \int_set:Nn \l_am_tmp_int { \l_am_key_int + \l_am_maze_width_int } }
                 \int_compare:nNnT { \l_am_rand_int } = { 3 }
-                  { \int_set:Nn \l_am_key_left_int { \l_am_key_int - \l_am_maze_width_int } }
-                \prop_put:NVn \l_am_maze_prop \l_am_key_left_int { \l_am_wall_int }
+                  { \int_set:Nn \l_am_tmp_int { \l_am_key_int - \l_am_maze_width_int } }
+                \prop_put:NVn \l_am_maze_prop \l_am_tmp_int { \l_am_wall_int }
               }
             \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
           }
