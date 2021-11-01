@@ -5,7 +5,7 @@
 
 \ExplSyntaxOn
 
-\NewDocumentCommand \maze { }
+\NewDocumentCommand \maze { m m }
   {
     \int_new:N  \l_am_road_int % 0
     \int_new:N  \l_am_wall_int % 1
@@ -14,8 +14,8 @@
 
     \int_new:N  \l_am_loop_i_int         % loop i
     \int_new:N  \l_am_loop_j_int         % loop j
-    \int_new:N  \l_am_maze_height_int    % maze height (odd)
     \int_new:N  \l_am_maze_width_int     % maze width (odd)
+    \int_new:N  \l_am_maze_height_int    % maze height (odd)
     \prop_new:N \l_am_maze_prop          % maze data, key(i*w+j) => (road, wall)
     \int_new:N  \l_am_tmp_int            % tmp
     \int_new:N  \l_am_key_int            % i*w+j
@@ -23,8 +23,8 @@
     \int_new:N  \l_am_key_top_int        % key-width
     \int_new:N  \l_am_rand_int           % random int
 
-    \int_set:Nn \l_am_maze_height_int { 7 }
-    \int_set:Nn \l_am_maze_width_int  { 7 }
+    \int_set:Nn \l_am_maze_width_int  { #1 * 2 - 1 }
+    \int_set:Nn \l_am_maze_height_int { #2 * 2 - 1 }
 
     % all 0 (road)
     \int_set:Nn \l_am_loop_i_int { 0 }
@@ -142,21 +142,50 @@
         \int_set:Nn \l_am_loop_i_int { \l_am_loop_i_int + 2 }
       }
 
+    % output
+    \tl_set:Nn \l_am_maze_tl { \begin{tabular}{|*{#1}{c}|}\hline }
     \int_set:Nn \l_am_loop_i_int { 0 }
-    \int_set:Nn \l_am_loop_j_int { 0 }
     \int_do_while:nn { \l_am_loop_i_int < \l_am_maze_height_int }
       {
-        \int_set:Nn \l_am_loop_j_int { 0 }
-        \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
+        \int_compare:nNnTF { \int_mod:nn { \l_am_loop_i_int } { 2 } } = { 0 }
           {
-            \int_set:Nn \l_am_key_int { \l_am_loop_i_int * \l_am_maze_width_int + \l_am_loop_j_int }
-            \prop_get:NVN \l_am_maze_prop \l_am_key_int \l_am_maze_value_int
-            \int_use:N \l_am_maze_value_int
-            \int_incr:N \l_am_loop_j_int
+            \int_set:Nn \l_am_loop_j_int { 1 }
+            \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
+              {
+                \int_compare:nNnT { \l_am_loop_j_int } > { 1 }
+                  { \tl_put_right:Nn \l_am_maze_tl { & } }
+                \int_set:Nn \l_am_key_int { \l_am_loop_i_int * \l_am_maze_width_int + \l_am_loop_j_int }
+                \prop_get:NVN \l_am_maze_prop \l_am_key_int \l_am_maze_value_int
+                \int_compare:nNnTF { \l_am_maze_value_int } = { \l_am_wall_int }
+                  {
+                    \int_compare:nNnTF { \l_am_loop_j_int } = { 1 }
+                      { \tl_put_right:Nn \l_am_maze_tl { \multicolumn{1}{|c|}{} } }
+                      { \tl_put_right:Nn \l_am_maze_tl { \multicolumn{1}{c|}{} } }
+                  }
+                  { \tl_put_right:Nn \l_am_maze_tl { } }
+                \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
+              }
+            \tl_put_right:Nn \l_am_maze_tl { & }
+          }
+          {
+            \tl_put_right:Nn \l_am_maze_tl { \\ }
+            \int_set:Nn \l_am_loop_j_int { 0 }
+            \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
+              {
+                \int_set:Nn \l_am_key_int { \l_am_loop_i_int * \l_am_maze_width_int + \l_am_loop_j_int }
+                \prop_get:NVN \l_am_maze_prop \l_am_key_int \l_am_maze_value_int
+                \int_compare:nNnT { \l_am_maze_value_int } = { \l_am_wall_int }
+                  {
+                    \int_set:Nn \l_am_tmp_int { \l_am_loop_j_int / 2 + 1 }
+                    \tl_put_right:Nx \l_am_maze_tl { \exp_not:N \cline{\int_use:N \l_am_tmp_int-\int_use:N \l_am_tmp_int} }
+                  }
+                \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
+              }
           }
         \int_incr:N \l_am_loop_i_int
-        \int_compare:nNnT { \l_am_loop_i_int } < { \l_am_maze_height_int } { \newline }
       }
+    \tl_put_right:Nn \l_am_maze_tl { \\\hline\end{tabular}\\ }
+    \tl_use:N \l_am_maze_tl
   }
 
 \ExplSyntaxOff
