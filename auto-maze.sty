@@ -1,7 +1,7 @@
 %% This is file `auto-maze.sty'.
 %% Copyright 2021 Daiji SUZUKI
 
-\RequirePackage{expl3, xparse, l3keys2e}
+\RequirePackage{expl3, xparse, l3keys2e, array}
 
 \ExplSyntaxOn
 
@@ -111,7 +111,12 @@
       }
 
     % output
-    \tl_set:Nn \l_am_maze_tl { \begin{tabular}{|*{#1}{c}|}\hline }
+    \tl_set:Nn \l_am_maze_tl {  }
+    \tl_put_right:Nn \l_am_maze_tl { \bgroup }
+    \tl_put_right:Nn \l_am_maze_tl { \renewcommand{\arraystretch}{0} }
+    \tl_put_right:Nn \l_am_maze_tl { \setlength{\tabcolsep}{0pt} }
+    \tl_put_right:Nn \l_am_maze_tl { \setlength{\arrayrulewidth}{0.5pt} }
+    \tl_put_right:Nn \l_am_maze_tl { \begin{tabular}{|*{#1}{p{1mm}}|}\hline }
     \int_set:Nn \l_am_loop_i_int { 0 }
     \int_do_while:nn { \l_am_loop_i_int < \l_am_maze_height_int }
       {
@@ -136,7 +141,7 @@
             \tl_put_right:Nn \l_am_maze_tl { & }
           }
           {
-            \tl_put_right:Nn \l_am_maze_tl { \\ }
+            \tl_put_right:Nn \l_am_maze_tl { \\[1mm] }
             \int_set:Nn \l_am_loop_j_int { 0 }
             \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
               {
@@ -152,7 +157,9 @@
           }
         \int_incr:N \l_am_loop_i_int
       }
-    \tl_put_right:Nn \l_am_maze_tl { \\\hline\end{tabular}\\ }
+    \tl_put_right:Nn \l_am_maze_tl { \\[1mm] }
+    \tl_put_right:Nn \l_am_maze_tl { \hline\end{tabular} }
+    \tl_put_right:Nn \l_am_maze_tl { \egroup }
     \tl_use:N \l_am_maze_tl
   }
 
