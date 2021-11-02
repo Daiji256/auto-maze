@@ -112,7 +112,7 @@
 
     % output
     \tl_set:Nn \l_am_maze_tl { }
-    \tl_put_right:Nn \l_am_maze_tl { \begin{tikzpicture}[x=8pt, y=8pt, line~width=1pt] }
+    \tl_put_right:Nn \l_am_maze_tl { \begin{tikzpicture}[x=8pt, y=8pt, line~width=1pt, line~cap=round] }
     \int_new:N  \l_am_x_int
     \int_new:N  \l_am_y_int
     \int_set:Nn \l_am_loop_i_int { 0 }
@@ -131,8 +131,7 @@
                   {
                     \tl_put_right:Nx \l_am_maze_tl
                       {
-                        \exp_not:N \draw[line~cap=round]
-                        (\int_use:N \l_am_x_int, \int_use:N \l_am_y_int)--++(0, 1);
+                        \exp_not:N \draw (\int_use:N \l_am_x_int, \int_use:N \l_am_y_int)--++(0, 1);
                       }
                   }
                 \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
@@ -150,8 +149,7 @@
                   {
                     \tl_put_right:Nx \l_am_maze_tl
                       {
-                        \exp_not:N \draw[line~cap=round]
-                        (\int_use:N \l_am_x_int, \int_use:N \l_am_y_int)--++(1, 0);
+                        \exp_not:N \draw (\int_use:N \l_am_x_int, \int_use:N \l_am_y_int)--++(1, 0);
                       }
                   }
                 \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
@@ -163,7 +161,7 @@
     \int_set:Nn \l_am_y_int { \l_am_maze_height_int / 2 }
     \tl_put_right:Nx \l_am_maze_tl
       {
-        \exp_not:N \draw[line~cap=round]
+        \exp_not:N \draw
         (0, 0)--++(\int_use:N \l_am_x_int, 0)--++(0, \int_use:N \l_am_y_int)--++(-\int_use:N \l_am_x_int, 0)--cycle;
       }
     \tl_put_right:Nn \l_am_maze_tl { \end{tikzpicture} }
