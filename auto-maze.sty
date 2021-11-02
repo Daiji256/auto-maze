@@ -1,7 +1,7 @@
 %% This is file `auto-maze.sty'.
 %% Copyright 2021 Daiji SUZUKI
 
-\RequirePackage{expl3, xparse, l3keys2e, array}
+\RequirePackage{expl3, xparse, l3keys2e, tikz}
 
 \ExplSyntaxOn
 
@@ -111,12 +111,10 @@
       }
 
     % output
-    \tl_set:Nn \l_am_maze_tl {  }
-    \tl_put_right:Nn \l_am_maze_tl { \bgroup }
-    \tl_put_right:Nn \l_am_maze_tl { \renewcommand{\arraystretch}{0} }
-    \tl_put_right:Nn \l_am_maze_tl { \setlength{\tabcolsep}{0pt} }
-    \tl_put_right:Nn \l_am_maze_tl { \setlength{\arrayrulewidth}{0.5pt} }
-    \tl_put_right:Nn \l_am_maze_tl { \begin{tabular}{|*{#1}{p{1mm}}|}\hline }
+    \tl_set:Nn \l_am_maze_tl { }
+    \tl_put_right:Nn \l_am_maze_tl { \begin{tikzpicture}[x=8pt, y=8pt, line~width=1pt] }
+    \int_new:N  \l_am_x_int
+    \int_new:N  \l_am_y_int
     \int_set:Nn \l_am_loop_i_int { 0 }
     \int_do_while:nn { \l_am_loop_i_int < \l_am_maze_height_int }
       {
@@ -125,41 +123,50 @@
             \int_set:Nn \l_am_loop_j_int { 1 }
             \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
               {
-                \int_compare:nNnT { \l_am_loop_j_int } > { 1 }
-                  { \tl_put_right:Nn \l_am_maze_tl { & } }
-                \int_set:Nn \l_am_key_int { \l_am_loop_i_int * \l_am_maze_width_int + \l_am_loop_j_int }
-                \prop_get:NVN \l_am_maze_prop \l_am_key_int \l_am_maze_value_int
-                \int_compare:nNnTF { \l_am_maze_value_int } = { \l_am_wall_int }
-                  {
-                    \int_compare:nNnTF { \l_am_loop_j_int } = { 1 }
-                      { \tl_put_right:Nn \l_am_maze_tl { \multicolumn{1}{|c|}{} } }
-                      { \tl_put_right:Nn \l_am_maze_tl { \multicolumn{1}{c|}{} } }
-                  }
-                  { \tl_put_right:Nn \l_am_maze_tl { } }
-                \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
-              }
-            \tl_put_right:Nn \l_am_maze_tl { & }
-          }
-          {
-            \tl_put_right:Nn \l_am_maze_tl { \\[1mm] }
-            \int_set:Nn \l_am_loop_j_int { 0 }
-            \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
-              {
+                \int_set:Nn \l_am_x_int { \l_am_loop_j_int / 2 }
+                \int_set:Nn \l_am_y_int { \l_am_loop_i_int / 2 }
                 \int_set:Nn \l_am_key_int { \l_am_loop_i_int * \l_am_maze_width_int + \l_am_loop_j_int }
                 \prop_get:NVN \l_am_maze_prop \l_am_key_int \l_am_maze_value_int
                 \int_compare:nNnT { \l_am_maze_value_int } = { \l_am_wall_int }
                   {
-                    \int_set:Nn \l_am_tmp_int { \l_am_loop_j_int / 2 + 1 }
-                    \tl_put_right:Nx \l_am_maze_tl { \exp_not:N \cline{\int_use:N \l_am_tmp_int-\int_use:N \l_am_tmp_int} }
+                    \tl_put_right:Nx \l_am_maze_tl
+                      {
+                        \exp_not:N \draw[line~cap=round]
+                        (\int_use:N \l_am_x_int, \int_use:N \l_am_y_int)--++(0, 1);
+                      }
+                  }
+                \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
+              }
+          }
+          {
+            \int_set:Nn \l_am_loop_j_int { 0 }
+            \int_do_while:nn { \l_am_loop_j_int < \l_am_maze_width_int }
+              {
+                \int_set:Nn \l_am_x_int { \l_am_loop_j_int / 2 }
+                \int_set:Nn \l_am_y_int { \l_am_loop_i_int / 2 }
+                \int_set:Nn \l_am_key_int { \l_am_loop_i_int * \l_am_maze_width_int + \l_am_loop_j_int }
+                \prop_get:NVN \l_am_maze_prop \l_am_key_int \l_am_maze_value_int
+                \int_compare:nNnT { \l_am_maze_value_int } = { \l_am_wall_int }
+                  {
+                    \tl_put_right:Nx \l_am_maze_tl
+                      {
+                        \exp_not:N \draw[line~cap=round]
+                        (\int_use:N \l_am_x_int, \int_use:N \l_am_y_int)--++(1, 0);
+                      }
                   }
                 \int_set:Nn \l_am_loop_j_int { \l_am_loop_j_int + 2 }
               }
           }
         \int_incr:N \l_am_loop_i_int
       }
-    \tl_put_right:Nn \l_am_maze_tl { \\[1mm] }
-    \tl_put_right:Nn \l_am_maze_tl { \hline\end{tabular} }
-    \tl_put_right:Nn \l_am_maze_tl { \egroup }
+    \int_set:Nn \l_am_x_int { \l_am_maze_width_int / 2 }
+    \int_set:Nn \l_am_y_int { \l_am_maze_height_int / 2 }
+    \tl_put_right:Nx \l_am_maze_tl
+      {
+        \exp_not:N \draw[line~cap=round]
+        (0, 0)--++(\int_use:N \l_am_x_int, 0)--++(0, \int_use:N \l_am_y_int)--++(-\int_use:N \l_am_x_int, 0)--cycle;
+      }
+    \tl_put_right:Nn \l_am_maze_tl { \end{tikzpicture} }
     \tl_use:N \l_am_maze_tl
   }
 
