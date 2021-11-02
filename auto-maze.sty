@@ -161,8 +161,10 @@
     \int_set:Nn \l_am_y_int { \l_am_maze_height_int / 2 }
     \tl_put_right:Nx \l_am_maze_tl
       {
-        \exp_not:N \draw
-        (0, 0)--++(\int_use:N \l_am_x_int, 0)--++(0, \int_use:N \l_am_y_int)--++(-\int_use:N \l_am_x_int, 0)--cycle;
+        \exp_not:N \draw (1, \int_use:N \l_am_y_int)--++(\int_use:N \l_am_x_int - 2, 0);
+        \exp_not:N \draw (0, 0)--++(\int_use:N \l_am_x_int, 0);
+        \exp_not:N \draw (0, 0)--++(0, \int_use:N \l_am_y_int);
+        \exp_not:N \draw (\int_use:N \l_am_x_int, 0)--++(0, \int_use:N \l_am_y_int);
       }
     \tl_put_right:Nn \l_am_maze_tl { \end{tikzpicture} }
     \tl_use:N \l_am_maze_tl
