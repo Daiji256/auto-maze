@@ -26,7 +26,7 @@
     \int_set:Nn \l_am_maze_width_int  { #1 * 2 - 1 }
     \int_set:Nn \l_am_maze_height_int { #2 * 2 - 1 }
 
-    % all 0 (road)
+    % all road
     \int_set:Nn \l_am_loop_i_int { 0 }
     \int_do_while:nn { \l_am_loop_i_int < \l_am_maze_height_int }
       {
