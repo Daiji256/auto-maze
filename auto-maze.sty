@@ -5,7 +5,7 @@
 
 \ExplSyntaxOn
 
-\NewDocumentCommand \maze { m m }
+\NewDocumentCommand \mazebar { m m }
   {
     \int_new:N  \l_am_road_int % 0
     \int_new:N  \l_am_wall_int % 1
@@ -169,5 +169,7 @@
     \tl_put_right:Nn \l_am_maze_tl { \end{tikzpicture} }
     \tl_use:N \l_am_maze_tl
   }
+
+\cs_new_eq:NN \maze \mazebar
 
 \ExplSyntaxOff
