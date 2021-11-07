@@ -211,6 +211,21 @@
         \int_incr:N \l_atmz_loop_j_int
       }
 
+    \int_set:Nn \l_atmz_tmp_int { (#1 - 1) * (#2 - 1) }
+    \int_set:Nn \l_atmz_loop_i_int { 0 }
+    \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_tmp_int }
+      {
+        \int_set:Nn \l_atmz_rand_int { \fp_eval:n { randint(0, 262143) } * 4096 + \l_atmz_loop_i_int }
+        \seq_put_right:Nx \l_atmz_rand_box_seq { \int_use:N \l_atmz_rand_int }
+        \int_incr:N \l_atmz_loop_i_int
+      }
+    \seq_sort:Nn \l_atmz_rand_box_seq
+      {
+        \int_compare:nNnTF { ##1 } < { ##2 }
+          { \sort_return_swapped: }
+          { \sort_return_same: }
+      }
+
     % output
     \int_set:Nn \l_atmz_loop_i_int { 0 }
     \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_maze_height_int }
@@ -225,6 +240,15 @@
             \int_incr:N \l_atmz_loop_j_int
           }
         \\
+        \int_incr:N \l_atmz_loop_i_int
+      }
+
+    \int_set:Nn \l_atmz_tmp_int { (#1 - 1) * (#2 - 1) }
+    \int_set:Nn \l_atmz_loop_i_int { 0 }
+    \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_tmp_int }
+      {
+        \seq_pop_left:NN \l_atmz_rand_box_seq \l_atmz_aaa_tl
+        \l_atmz_aaa_tl \\
         \int_incr:N \l_atmz_loop_i_int
       }
 
