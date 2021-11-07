@@ -215,7 +215,7 @@
         \int_incr:N \l_atmz_loop_j_int
       }
 
-    \int_set:Nn \l_atmz_tmp_int { ( #1 - 1 ) * ( #2 - 1 ) }
+    \int_set:Nn \l_atmz_tmp_int { #1 * #2 }
     \int_set:Nn \l_atmz_loop_i_int { 0 }
     \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_tmp_int }
       {
@@ -247,7 +247,7 @@
         \int_incr:N \l_atmz_loop_i_int
       }
 
-    \int_set:Nn \l_atmz_tmp_int { ( #1 - 1 ) * ( #2 - 1 ) }
+    \int_set:Nn \l_atmz_tmp_int { #1 * #2 }
     \int_set:Nn \l_atmz_loop_i_int { 0 }
     \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_tmp_int }
       {
