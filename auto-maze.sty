@@ -16,13 +16,13 @@
 \int_new:N  \l_atmz_y_int           % y
 \int_new:N  \l_atmz_maze_width_int  % maze width (odd)
 \int_new:N  \l_atmz_maze_height_int % maze height (odd)
-\prop_new:N \l_atmz_maze_prop       % maze data, key(i * w + j) => (road, wall)
+\prop_new:N \l_atmz_maze_prop       % maze data, key(i * width + j) => (road, wall)
 \int_new:N  \l_atmz_tmp_int         % tmp
-\int_new:N  \l_atmz_key_int         % i * w + j
+\int_new:N  \l_atmz_key_int         % i * width + j
 \int_new:N  \l_atmz_key_left_int    % key - 1
 \int_new:N  \l_atmz_key_top_int     % key - width
 \int_new:N  \l_atmz_rand_int        % random int
-\seq_new:N  \l_atmz_rand_box_seq    % randint(0, 2^18 - 1) * 2^12 + randint(0, h * w - 1)
+\seq_new:N  \l_atmz_rand_box_seq    % tl, randint(0, 2^18 - 1) * 2^12 + randint(0, (height - 1) * (width - 1) - 1)
 
 \NewDocumentCommand \mazebar { m m }
   {
