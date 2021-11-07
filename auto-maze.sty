@@ -26,6 +26,7 @@
 \prop_new:N \l_atmz_check_prop      % check rand box
 \bool_new:N \l_atmz_loop_bool       % loop bool
 \int_new:N  \l_atmz_now_int         %
+\int_new:N  \l_atmz_count_tblr_int  %
 
 \NewDocumentCommand \mazebar { m m }
   {
@@ -227,12 +228,6 @@
         \int_compare:nNnTF { ##1 } < { ##2 }
           { \sort_return_swapped: }
           { \sort_return_same: }
-      }
-
-    \bool_set_true:N \l_atmz_loop_bool
-    \bool_do_while:Nn \l_atmz_loop_bool
-      {
-        \bool_set_false:N \l_atmz_loop_bool
       }
 
     % output
