@@ -5,26 +5,26 @@
 
 \ExplSyntaxOn
 
+\int_new:N  \l_atmz_road_int % 0
+\int_new:N  \l_atmz_wall_int % 1
+\int_set:Nn \l_atmz_road_int { 0 }
+\int_set:Nn \l_atmz_wall_int { 1 }
+
+\int_new:N  \l_atmz_loop_i_int      % loop i
+\int_new:N  \l_atmz_loop_j_int      % loop j
+\int_new:N  \l_atmz_x_int           % x
+\int_new:N  \l_atmz_y_int           % y
+\int_new:N  \l_atmz_maze_width_int  % maze width (odd)
+\int_new:N  \l_atmz_maze_height_int % maze height (odd)
+\prop_new:N \l_atmz_maze_prop       % maze data, key(i*w+j) => (road, wall)
+\int_new:N  \l_atmz_tmp_int         % tmp
+\int_new:N  \l_atmz_key_int         % i*w+j
+\int_new:N  \l_atmz_key_left_int    % key-1
+\int_new:N  \l_atmz_key_top_int     % key-width
+\int_new:N  \l_atmz_rand_int        % random int
+
 \NewDocumentCommand \mazebar { m m }
   {
-    \int_new:N  \l_atmz_road_int % 0
-    \int_new:N  \l_atmz_wall_int % 1
-    \int_set:Nn \l_atmz_road_int { 0 }
-    \int_set:Nn \l_atmz_wall_int { 1 }
-
-    \int_new:N  \l_atmz_loop_i_int      % loop i
-    \int_new:N  \l_atmz_loop_j_int      % loop j
-    \int_new:N  \l_atmz_x_int           % x
-    \int_new:N  \l_atmz_y_int           % y
-    \int_new:N  \l_atmz_maze_width_int  % maze width (odd)
-    \int_new:N  \l_atmz_maze_height_int % maze height (odd)
-    \prop_new:N \l_atmz_maze_prop       % maze data, key(i*w+j) => (road, wall)
-    \int_new:N  \l_atmz_tmp_int         % tmp
-    \int_new:N  \l_atmz_key_int         % i*w+j
-    \int_new:N  \l_atmz_key_left_int    % key-1
-    \int_new:N  \l_atmz_key_top_int     % key-width
-    \int_new:N  \l_atmz_rand_int        % random int
-
     \int_set:Nn \l_atmz_maze_width_int  { #1 * 2 - 1 }
     \int_set:Nn \l_atmz_maze_height_int { #2 * 2 - 1 }
 
@@ -168,6 +168,8 @@
       }
     \tl_put_right:Nn \l_atmz_maze_tl { \end{tikzpicture} }
     \tl_use:N \l_atmz_maze_tl
+
+    \prop_clear:N \l_atmz_maze_prop
   }
 
 \cs_new_eq:NN \maze \mazebar
