@@ -22,6 +22,7 @@
 \int_new:N  \l_atmz_key_left_int    % key - 1
 \int_new:N  \l_atmz_key_top_int     % key - width
 \int_new:N  \l_atmz_rand_int        % random int
+\seq_new:N  \l_atmz_rand_box_seq    % randint(0, 2^18 - 1) * 2^12 + randint(0, h * w - 1)
 
 \NewDocumentCommand \mazebar { m m }
   {
