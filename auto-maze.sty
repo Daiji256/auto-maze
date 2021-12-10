@@ -209,9 +209,9 @@
     \int_do_while:nn { \l_atmz_loop_j_int < \l_atmz_maze_width_int }
       {
         \int_set:Nn \l_atmz_key_int { \l_atmz_loop_j_int }
-        \prop_put:NVn \l_atmz_maze_prop \l_atmz_key_int { \c_max_int }
+        \prop_put:NVV \l_atmz_maze_prop \l_atmz_key_int { \c_max_int }
         \int_set:Nn \l_atmz_key_int { ( \l_atmz_maze_height_int - 1 ) * \l_atmz_maze_width_int + \l_atmz_loop_j_int }
-        \prop_put:NVn \l_atmz_maze_prop \l_atmz_key_int { \c_max_int }
+        \prop_put:NVV \l_atmz_maze_prop \l_atmz_key_int { \c_max_int }
         \int_incr:N \l_atmz_loop_j_int
       }
 
