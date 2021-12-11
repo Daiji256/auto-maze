@@ -151,8 +151,8 @@
                 \int_set:Nn \l_atmz_x_int { \l_atmz_loop_j_int / 2 }
                 \int_set:Nn \l_atmz_y_int { \l_atmz_loop_i_int / 2 }
                 \int_set:Nn \l_atmz_key_int { \l_atmz_loop_i_int * \l_atmz_maze_width_int + \l_atmz_loop_j_int }
-                \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_int
-                \int_compare:nNnT { \l_atmz_maze_value_int } = { \l_atmz_wall_int }
+                \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_tl
+                \int_compare:nNnT { \l_atmz_maze_value_tl } = { \l_atmz_wall_int }
                   {
                     \tl_put_right:Nx \l_atmz_maze_tl
                       {
