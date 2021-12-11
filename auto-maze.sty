@@ -14,6 +14,8 @@
 \int_new:N  \l_atmz_loop_j_int      % loop j
 \int_new:N  \l_atmz_x_int           % x
 \int_new:N  \l_atmz_y_int           % y
+\int_new:N  \l_atmz_arg_width_int   % arg width
+\int_new:N  \l_atmz_arg_height_int  % arg height
 \int_new:N  \l_atmz_maze_width_int  % maze width (odd)
 \int_new:N  \l_atmz_maze_height_int % maze height (odd)
 \prop_new:N \l_atmz_maze_prop       % maze data, key(i * width + j) => (road, wall)
@@ -179,8 +181,10 @@
 
 \NewDocumentCommand \mazedig { m m }
   {
-    \int_set:Nn \l_atmz_maze_width_int  { #1 * 2 + 3 }
-    \int_set:Nn \l_atmz_maze_height_int { #2 * 2 + 3 }
+    \int_set:Nn \l_atmz_arg_width_int { #1 }
+    \int_set:Nn \l_atmz_arg_height_int { #2 }
+    \int_set:Nn \l_atmz_maze_width_int { \l_atmz_arg_width_int * 2 + 1 }
+    \int_set:Nn \l_atmz_maze_height_int { \l_atmz_arg_height_int * 2 + 1 }
 
     % all wall
     \int_set:Nn \l_atmz_loop_i_int { 1 }
@@ -215,7 +219,7 @@
         \int_incr:N \l_atmz_loop_j_int
       }
 
-    \int_set:Nn \l_atmz_tmp_int { #1 * #2 }
+    \int_set:Nn \l_atmz_tmp_int { \l_atmz_arg_width_int * \l_atmz_arg_height_int }
     \int_set:Nn \l_atmz_loop_i_int { 0 }
     \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_tmp_int }
       {
