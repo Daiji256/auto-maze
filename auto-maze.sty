@@ -179,10 +179,12 @@
     \prop_clear:N \l_atmz_maze_prop
   }
 
-\NewDocumentCommand \mazedig { m m }
+\NewDocumentCommand \mazedig { o m m }
   {
-    \int_set:Nn \l_atmz_arg_width_int { #1 }
-    \int_set:Nn \l_atmz_arg_height_int { #2 }
+    \IfNoValueF { #1 } { \sys_gset_rand_seed:n { #1 } }
+
+    \int_set:Nn \l_atmz_arg_width_int { #2 }
+    \int_set:Nn \l_atmz_arg_height_int { #3 }
     \int_set:Nn \l_atmz_maze_width_int { \l_atmz_arg_width_int * 2 + 3 }
     \int_set:Nn \l_atmz_maze_height_int { \l_atmz_arg_height_int * 2 + 3 }
 
