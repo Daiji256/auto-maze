@@ -32,6 +32,15 @@
 
     \int_set:Nn \l__atmz_arg_width_int { #2 }
     \int_set:Nn \l__atmz_arg_height_int { #3 }
+    \int_compare:nNnT { \l__atmz_arg_width_int } < { 2 }
+      { \int_set:Nn \l__atmz_arg_width_int { 2 } }
+    \int_compare:nNnT { \l__atmz_arg_height_int } < { 2 }
+      { \int_set:Nn \l__atmz_arg_height_int { 2 } }
+    \int_compare:nNnT { \l__atmz_arg_width_int } > { 64 }
+      { \int_set:Nn \l__atmz_arg_width_int { 64 } }
+    \int_compare:nNnT { \l__atmz_arg_height_int } > { 64 }
+      { \int_set:Nn \l__atmz_arg_height_int { 64 } }
+
     \int_set:Nn \l__atmz_maze_width_int { \l__atmz_arg_width_int * 2 + 3 }
     \int_set:Nn \l__atmz_maze_height_int { \l__atmz_arg_height_int * 2 + 3 }
 
