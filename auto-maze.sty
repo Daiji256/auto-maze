@@ -21,7 +21,7 @@
 \int_new:N  \l__atmz_tmp_int         % tmp
 \int_new:N  \l__atmz_key_int         % i * width + j
 \int_new:N  \l__atmz_rand_int        % random int
-\seq_new:N  \l__atmz_rand_box_seq    % tl, randint( 0, 2^18 - 1 ) * 2^12 + cell position
+\seq_new:N  \l__atmz_rand_box_seq    % randint( 0, 2^18 - 1 ) * 2^12 + cell position
 \bool_new:N \l__atmz_loop_i_bool     % loop bool 1
 \int_new:N  \l__atmz_now_int         % now cell position
 \int_new:N  \l__atmz_count_tblr_int  % number of possible moves
@@ -43,7 +43,7 @@
         \int_do_while:nn { \l__atmz_loop_j_int < \l__atmz_maze_width_int - 1 }
           {
             \int_set:Nn \l__atmz_key_int { \l__atmz_loop_i_int * \l__atmz_maze_width_int + \l__atmz_loop_j_int }
-            \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int { \c__atmz_wall_int }
+            \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_wall_int
             \int_incr:N \l__atmz_loop_j_int
           }
         \int_incr:N \l__atmz_loop_i_int
@@ -53,18 +53,18 @@
     \int_do_while:nn { \l__atmz_loop_i_int < \l__atmz_maze_height_int }
       {
         \int_set:Nn \l__atmz_key_int { \l__atmz_loop_i_int * \l__atmz_maze_width_int }
-        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int { \c__atmz_road_int }
+        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_road_int
         \int_set:Nn \l__atmz_key_int { \l__atmz_loop_i_int * \l__atmz_maze_width_int + \l__atmz_maze_width_int - 1 }
-        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int { \c__atmz_road_int }
+        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_road_int
         \int_incr:N \l__atmz_loop_i_int
       }
     \int_set:Nn \l__atmz_loop_j_int { 0 }
     \int_do_while:nn { \l__atmz_loop_j_int < \l__atmz_maze_width_int }
       {
         \int_set:Nn \l__atmz_key_int { \l__atmz_loop_j_int }
-        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int { \c__atmz_road_int }
+        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_road_int
         \int_set:Nn \l__atmz_key_int { ( \l__atmz_maze_height_int - 1 ) * \l__atmz_maze_width_int + \l__atmz_loop_j_int }
-        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int { \c__atmz_road_int }
+        \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_road_int
         \int_incr:N \l__atmz_loop_j_int
       }
 
@@ -73,7 +73,7 @@
     \int_set:Nn \l__atmz_x_int { ( \int_mod:nn { \l__atmz_now_int } { \l__atmz_arg_width_int } ) * 2 + 2 }
     \int_set:Nn \l__atmz_y_int { \fp_eval:n { floor( \l__atmz_now_int / \l__atmz_arg_width_int ) } * 2 + 2 }
     \int_set:Nn \l__atmz_key_int { \l__atmz_y_int * \l__atmz_maze_width_int + \l__atmz_x_int }
-    \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int { \c__atmz_road_int }
+    \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_road_int
 
     \int_set:Nn \l__atmz_count_tblr_int { 0 }
     \bool_set_true:N \l__atmz_loop_i_bool
@@ -142,9 +142,9 @@
                         \int_set:Nn \l__atmz_rand_int { \fp_eval:n { randint( 0, 262143 ) } * 4096 + \l__atmz_now_int }
                         \seq_put_right:Nx \l__atmz_rand_box_seq { \int_use:N \l__atmz_rand_int }
                         \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int - \l__atmz_maze_width_int }
-                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                         \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int - \l__atmz_maze_width_int * 2 }
-                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                       }
                       { \int_incr:N  \l__atmz_rand_int }
                   }
@@ -158,9 +158,9 @@
                         \int_set:Nn \l__atmz_rand_int { \fp_eval:n { randint( 0, 262143 ) } * 4096 + \l__atmz_now_int }
                         \seq_put_right:Nx \l__atmz_rand_box_seq { \int_use:N \l__atmz_rand_int }
                         \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int + \l__atmz_maze_width_int }
-                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                         \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int + \l__atmz_maze_width_int * 2 }
-                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                       }
                       { \int_incr:N  \l__atmz_rand_int }
                   }
@@ -174,9 +174,9 @@
                         \int_set:Nn \l__atmz_rand_int { \fp_eval:n { randint( 0, 262143 ) } * 4096 + \l__atmz_now_int }
                         \seq_put_right:Nx \l__atmz_rand_box_seq { \int_use:N \l__atmz_rand_int }
                         \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int - 1 }
-                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                         \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int - 2 }
-                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                        \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                       }
                       { \int_incr:N  \l__atmz_rand_int }
                   }
@@ -186,9 +186,9 @@
                     \int_set:Nn \l__atmz_rand_int { \fp_eval:n { randint( 0, 262143 ) } * 4096 + \l__atmz_now_int }
                     \seq_put_right:Nx \l__atmz_rand_box_seq { \int_use:N \l__atmz_rand_int }
                     \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int + 1 }
-                    \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                    \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                     \int_set:Nn \l__atmz_tmp_int { \l__atmz_key_int + 2 }
-                    \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int { \c__atmz_road_int }
+                    \prop_put:NVV \l__atmz_maze_prop \l__atmz_tmp_int \c__atmz_road_int
                   }
               }
           }
