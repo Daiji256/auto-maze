@@ -68,6 +68,7 @@
         \int_incr:N \l__atmz_loop_j_int
       }
 
+    % start
     \int_set:Nn \l__atmz_now_int { \fp_eval:n { randint( 0, \l__atmz_arg_width_int * \l__atmz_arg_height_int - 1 ) } }
     \seq_put_right:Nx \l__atmz_rand_box_seq { \int_use:N \l__atmz_now_int }
     \int_set:Nn \l__atmz_x_int { ( \int_mod:nn { \l__atmz_now_int } { \l__atmz_arg_width_int } ) * 2 + 2 }
@@ -75,6 +76,7 @@
     \int_set:Nn \l__atmz_key_int { \l__atmz_y_int * \l__atmz_maze_width_int + \l__atmz_x_int }
     \prop_put:NVV \l__atmz_maze_prop \l__atmz_key_int \c__atmz_road_int
 
+    % main loop
     \int_set:Nn \l__atmz_count_tblr_int { 0 }
     \bool_set_true:N \l__atmz_loop_i_bool
     \bool_do_while:Nn \l__atmz_loop_i_bool
