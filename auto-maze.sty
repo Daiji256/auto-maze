@@ -6,10 +6,10 @@
 \ProvidesExplPackage {auto-maze} {2021/12/12} {0.1}
   {Automatic maze creation package}
 
-\int_new:N  \l_atmz_wall_int % 0
-\int_new:N  \l_atmz_road_int % not wall
-\int_set:Nn \l_atmz_wall_int { 0 }
-\int_set:Nn \l_atmz_road_int { 1 }
+\int_new:N  \l_atmz_wall_int
+\int_new:N  \l_atmz_road_int
+\int_set:Nn \l_atmz_wall_int { 1 }
+\int_set:Nn \l_atmz_road_int { 0 }
 
 \int_new:N  \l_atmz_loop_i_int      % loop i
 \int_new:N  \l_atmz_loop_j_int      % loop j
