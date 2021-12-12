@@ -363,30 +363,61 @@
       }
 
     % output
-    \int_set:Nn \l_atmz_loop_i_int { 0 }
-    \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_maze_height_int }
+    \tl_set:Nn \l_atmz_maze_tl { }
+    \tl_put_right:Nn \l_atmz_maze_tl { \begin{tikzpicture}[x=8pt, y=-8pt, line~width=1pt, line~cap=round] }
+    \int_set:Nn \l_atmz_loop_i_int { 2 }
+    \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_maze_height_int - 2 }
       {
-        \int_set:Nn \l_atmz_loop_j_int { 0 }
-        \int_do_while:nn { \l_atmz_loop_j_int < \l_atmz_maze_width_int }
+        \int_compare:nNnTF { \int_mod:nn { \l_atmz_loop_i_int } { 2 } } = { 0 }
           {
-            \int_set:Nn \l_atmz_key_int { \l_atmz_loop_i_int * \l_atmz_maze_width_int + \l_atmz_loop_j_int }
-            \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_int
-            \int_compare:nNnTF { \l_atmz_maze_value_int } = { \l_atmz_wall_int }
-              { XX } { \phantom{XX} }
-            \int_incr:N \l_atmz_loop_j_int
+            \int_set:Nn \l_atmz_loop_j_int { 3 }
+            \int_do_while:nn { \l_atmz_loop_j_int < \l_atmz_maze_width_int - 2 }
+              {
+                \int_set:Nn \l_atmz_x_int { \l_atmz_loop_j_int / 2 }
+                \int_set:Nn \l_atmz_y_int { \l_atmz_loop_i_int / 2 }
+                \int_set:Nn \l_atmz_key_int { \l_atmz_loop_i_int * \l_atmz_maze_width_int + \l_atmz_loop_j_int }
+                \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_tl
+                \int_compare:nNnT { \l_atmz_maze_value_tl } = { \l_atmz_wall_int }
+                  {
+                    \tl_put_right:Nx \l_atmz_maze_tl
+                      {
+                        \exp_not:N \draw (\int_use:N \l_atmz_x_int, \int_use:N \l_atmz_y_int)--++(0, 1);
+                      }
+                  }
+                \int_set:Nn \l_atmz_loop_j_int { \l_atmz_loop_j_int + 2 }
+              }
           }
-        \\
+          {
+            \int_set:Nn \l_atmz_loop_j_int { 0 }
+            \int_do_while:nn { \l_atmz_loop_j_int < \l_atmz_maze_width_int - 2 }
+              {
+                \int_set:Nn \l_atmz_x_int { \l_atmz_loop_j_int / 2 }
+                \int_set:Nn \l_atmz_y_int { \l_atmz_loop_i_int / 2 }
+                \int_set:Nn \l_atmz_key_int { \l_atmz_loop_i_int * \l_atmz_maze_width_int + \l_atmz_loop_j_int }
+                \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_tl
+                \int_compare:nNnT { \l_atmz_maze_value_tl } = { \l_atmz_wall_int }
+                  {
+                    \tl_put_right:Nx \l_atmz_maze_tl
+                      {
+                        \exp_not:N \draw (\int_use:N \l_atmz_x_int, \int_use:N \l_atmz_y_int)--++(1, 0);
+                      }
+                  }
+                \int_set:Nn \l_atmz_loop_j_int { \l_atmz_loop_j_int + 2 }
+              }
+          }
         \int_incr:N \l_atmz_loop_i_int
       }
-
-    \int_set:Nn \l_atmz_tmp_int { #1 * #2 }
-    \int_set:Nn \l_atmz_loop_i_int { 0 }
-    \int_do_while:nn { \l_atmz_loop_i_int < \l_atmz_tmp_int }
+    \int_set:Nn \l_atmz_x_int { ( \l_atmz_maze_width_int - 4 ) / 2 }
+    \int_set:Nn \l_atmz_y_int { ( \l_atmz_maze_height_int - 4 ) / 2 }
+    \tl_put_right:Nx \l_atmz_maze_tl
       {
-        \seq_pop_left:NN \l_atmz_rand_box_seq \l_atmz_aaa_tl
-        \l_atmz_aaa_tl \\
-        \int_incr:N \l_atmz_loop_i_int
+        \exp_not:N \draw (1, \int_use:N \l_atmz_y_int + 1)--++(\int_use:N \l_atmz_x_int, 0);
+        \exp_not:N \draw (1, 1)--++(\int_use:N \l_atmz_x_int, 0);
+        \exp_not:N \draw (1, 1)--++(0, \int_use:N \l_atmz_y_int - 1);
+        \exp_not:N \draw (\int_use:N \l_atmz_x_int + 1, 2)--++(0, \int_use:N \l_atmz_y_int - 1);
       }
+    \tl_put_right:Nn \l_atmz_maze_tl { \end{tikzpicture} }
+    \tl_use:N \l_atmz_maze_tl
 
     \prop_clear:N \l_atmz_maze_prop
     \seq_clear:N \l_atmz_rand_box_seq
