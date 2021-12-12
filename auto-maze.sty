@@ -245,26 +245,27 @@
         \int_compare:nNnT { \l_atmz_count_tblr_int } = { 0 }
           {
             \bool_set_false:N \l_atmz_loop_i_bool
-            \seq_if_empty:NTF \l_atmz_rand_box_seq
-              { \bool_set_false:N \l_atmz_loop_ii_bool }
-              { \bool_set_true:N \l_atmz_loop_ii_bool }
-            \bool_do_while:Nn \l_atmz_loop_ii_bool
+            \seq_if_empty:NF \l_atmz_rand_box_seq
               {
-                \seq_pop_left:NN \l_atmz_rand_box_seq \l_atmz_rand_box_left_tl
-                \int_set:Nn \l_atmz_now_int { \int_mod:nn { \l_atmz_rand_box_left_tl } { 4096 } }
-                \int_set:Nn \l_atmz_x_int { ( \int_mod:nn { \l_atmz_now_int } { \l_atmz_arg_width_int } ) * 2 + 2 }
-                \int_set:Nn \l_atmz_y_int { \fp_eval:n { floor(\l_atmz_now_int / \l_atmz_arg_width_int) } * 2 + 2 }
-                \int_set:Nn \l_atmz_key_int { \l_atmz_y_int * \l_atmz_maze_width_int + \l_atmz_x_int }
-                \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_tl
-                \int_compare:nNnT { \l_atmz_maze_value_tl } = { \c_zero_int }
+                \bool_set_true:N \l_atmz_loop_ii_bool
+                \bool_do_while:Nn \l_atmz_loop_ii_bool
                   {
-                    \int_incr:N \l_atmz_loop_i_int
-                    \prop_put:NVV \l_atmz_maze_prop \l_atmz_key_int { \l_atmz_loop_i_int }
-                    \bool_set_true:N \l_atmz_loop_i_bool
-                    \bool_set_false:N \l_atmz_loop_ii_bool
+                    \seq_pop_left:NN \l_atmz_rand_box_seq \l_atmz_rand_box_left_tl
+                    \int_set:Nn \l_atmz_now_int { \int_mod:nn { \l_atmz_rand_box_left_tl } { 4096 } }
+                    \int_set:Nn \l_atmz_x_int { ( \int_mod:nn { \l_atmz_now_int } { \l_atmz_arg_width_int } ) * 2 + 2 }
+                    \int_set:Nn \l_atmz_y_int { \fp_eval:n { floor(\l_atmz_now_int / \l_atmz_arg_width_int) } * 2 + 2 }
+                    \int_set:Nn \l_atmz_key_int { \l_atmz_y_int * \l_atmz_maze_width_int + \l_atmz_x_int }
+                    \prop_get:NVN \l_atmz_maze_prop \l_atmz_key_int \l_atmz_maze_value_tl
+                    \int_compare:nNnT { \l_atmz_maze_value_tl } = { \c_zero_int }
+                      {
+                        \int_incr:N \l_atmz_loop_i_int
+                        \prop_put:NVV \l_atmz_maze_prop \l_atmz_key_int { \l_atmz_loop_i_int }
+                        \bool_set_true:N \l_atmz_loop_i_bool
+                        \bool_set_false:N \l_atmz_loop_ii_bool
+                      }
+                    \seq_if_empty:NT \l_atmz_rand_box_seq
+                      { \bool_set_false:N \l_atmz_loop_ii_bool }
                   }
-                \seq_if_empty:NT \l_atmz_rand_box_seq
-                  { \bool_set_false:N \l_atmz_loop_ii_bool }
               }
           }
 
