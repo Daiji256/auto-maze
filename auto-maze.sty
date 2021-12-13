@@ -112,7 +112,7 @@
         \int_compare:nNnT { \l__atmz_maze_value_tl } = { \c__atmz_wall_int }
           { \int_incr:N \l__atmz_count_tblr_int }
 
-        % move
+        % dig
         \int_compare:nNnF { \l__atmz_count_tblr_int } = { 0 }
           {
             \int_set:Nn \l__atmz_rand_int { \fp_eval:n { randint( 1, \l__atmz_count_tblr_int ) } }
