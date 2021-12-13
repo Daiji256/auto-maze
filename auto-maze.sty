@@ -9,15 +9,15 @@
 \int_const:Nn \c__atmz_wall_int { \c_one_int }
 \int_const:Nn \c__atmz_road_int { \c_zero_int }
 
-\int_new:N  \l__atmz_loop_i_int      % loop i
-\int_new:N  \l__atmz_loop_j_int      % loop j
-\int_new:N  \l__atmz_x_int           % x
-\int_new:N  \l__atmz_y_int           % y
 \int_new:N  \l__atmz_arg_width_int   % arg width
 \int_new:N  \l__atmz_arg_height_int  % arg height
 \int_new:N  \l__atmz_maze_width_int  % ( arg width ) * 2 + 3
 \int_new:N  \l__atmz_maze_height_int % ( arg height ) * 2 + 3
 \prop_new:N \l__atmz_maze_prop       % maze data, key( i * width + j ) => ( road, wall )
+\int_new:N  \l__atmz_loop_i_int      % loop i
+\int_new:N  \l__atmz_loop_j_int      % loop j
+\int_new:N  \l__atmz_x_int           % x
+\int_new:N  \l__atmz_y_int           % y
 \int_new:N  \l__atmz_tmp_int         % tmp
 \int_new:N  \l__atmz_key_int         % i * width + j
 \int_new:N  \l__atmz_rand_int        % random int
