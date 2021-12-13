@@ -3,7 +3,7 @@
 
 \RequirePackage{expl3, xparse, tikz}
 
-\ProvidesExplPackage {auto-maze} {2021/12/13} {0.2.0}
+\ProvidesExplPackage {auto-maze} {2021/12/13} {0.2.1}
   {Automatic maze creation package}
 
 \int_const:Nn \c__atmz_wall_int { \c_one_int }
@@ -192,10 +192,6 @@
                   }
                 \seq_pop_left:NN \l__atmz_rand_box_seq \l__atmz_rand_box_left_tl
                 \int_set:Nn \l__atmz_now_int { \int_mod:nn { \l__atmz_rand_box_left_tl } { 4096 } }
-                \int_set:Nn \l__atmz_x_int { ( \int_mod:nn { \l__atmz_now_int } { \l__atmz_arg_width_int } ) * 2 + 2 }
-                \int_set:Nn \l__atmz_y_int { \fp_eval:n { floor( \l__atmz_now_int / \l__atmz_arg_width_int ) } * 2 + 2 }
-                \int_set:Nn \l__atmz_key_int { \l__atmz_y_int * \l__atmz_maze_width_int + \l__atmz_x_int }
-                \int_set:Nn \l__atmz_rand_int { \fp_eval:n { randint( 0, 262143 ) } * 4096 + \l__atmz_now_int }
               }
           }
       }
